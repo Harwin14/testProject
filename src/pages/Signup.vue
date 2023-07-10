@@ -1,72 +1,128 @@
 <template>
     <div class="body flexCenter">
-      <div class="wrapper">
-        <div class="form-overlay"></div>
-        
-        <div class="form-signup" :class="{ 'show': activeForm === 'signup', 'hide': activeForm === 'login' }">
-          <h2 class="form-title">Sign Up</h2>
-          <p class="form-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, cum!</p>
-          <form action="">
-            <div class="form-group">
-              <input type="email" class="form-input" placeholder=" ">
-              <label for="" class="form-label">Email address</label>
-              <i class="ri-at-line form-icon"></i>
+        <div class="wrapper">
+            <div class="form-overlay"></div>
+
+            <div
+                class="form-signup"
+                :class="{
+                    show: activeForm === 'signup',
+                    hide: activeForm === 'login',
+                }"
+            >
+                <h2 class="form-title">Sign Up</h2>
+                <p class="form-description">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Explicabo, cum!
+                </p>
+                <form action="">
+                    <div class="form-group">
+                        <input
+                            type="email"
+                            class="form-input"
+                            placeholder=" "
+                        />
+                        <label for="" class="form-label">Email address</label>
+                        <i class="ri-at-line form-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" placeholder=" " />
+                        <label for="" class="form-label">Your name</label>
+                        <i class="ri-user-smile-line form-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="password"
+                            class="form-input"
+                            placeholder=" "
+                        />
+                        <label for="" class="form-label">Password</label>
+                        <i class="ri-lock-line form-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="password"
+                            class="form-input"
+                            placeholder=" "
+                        />
+                        <label for="" class="form-label"
+                            >Confirm password</label
+                        >
+                        <i class="ri-lock-line form-icon"></i>
+                    </div>
+                    <button type="submit" class="btn-submit">Signup</button>
+                </form>
+                <p class="form-bottom">
+                    I'm not a member.
+                    <a
+                        href="#"
+                        class="link-login"
+                        @click.prevent="setActiveForm('login')"
+                        >Login</a
+                    >
+                </p>
             </div>
-            <div class="form-group">
-              <input type="text" class="form-input" placeholder=" ">
-              <label for="" class="form-label">Your name</label>
-              <i class="ri-user-smile-line form-icon"></i>
+            <div
+                class="form-login"
+                :class="{
+                    show: activeForm === 'login',
+                    hide: activeForm === 'signup',
+                }"
+            >
+                <h2 class="form-title">Login</h2>
+                <p class="form-description">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Explicabo, cum!
+                </p>
+                <form action="">
+                    <div class="form-group">
+                        <input
+                            type="email"
+                            class="form-input"
+                            placeholder=" "
+                        />
+                        <label for="" class="form-label">Email address</label>
+                        <i class="ri-at-line form-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="password"
+                            class="form-input"
+                            placeholder=" "
+                        />
+                        <label for="" class="form-label">Password</label>
+                        <i class="ri-lock-line form-icon"></i>
+                    </div>
+                    <button type="submit" class="btn-submit">Login</button>
+                </form>
+                <p class="form-bottom">
+                    I'm not a member.
+                    <a
+                        href="#"
+                        class="link-signup"
+                        @click.prevent="setActiveForm('signup')"
+                        >Signup</a
+                    >
+                </p>
             </div>
-            <div class="form-group">
-              <input type="password" class="form-input" placeholder=" ">
-              <label for="" class="form-label">Password</label>
-              <i class="ri-lock-line form-icon"></i>
-            </div>
-            <div class="form-group">
-              <input type="password" class="form-input" placeholder=" ">
-              <label for="" class="form-label">Confirm password</label>
-              <i class="ri-lock-line form-icon"></i>
-            </div>
-            <button type="submit" class="btn-submit">Signup</button>
-          </form>
-          <p class="form-bottom">I'm not a member. <a href="#" class="link-login" @click.prevent="setActiveForm('login')">Login</a></p>
         </div>
-        <div class="form-login" :class="{ 'show': activeForm === 'login', 'hide': activeForm === 'signup' }">
-          <h2 class="form-title">Login</h2>
-          <p class="form-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, cum!</p>
-          <form action="">
-            <div class="form-group">
-              <input type="email" class="form-input" placeholder=" ">
-              <label for="" class="form-label">Email address</label>
-              <i class="ri-at-line form-icon"></i>
-            </div>
-            <div class="form-group">
-              <input type="password" class="form-input" placeholder=" ">
-              <label for="" class="form-label">Password</label>
-              <i class="ri-lock-line form-icon"></i>
-            </div>
-            <button type="submit" class="btn-submit">Login</button>
-          </form>
-          <p class="form-bottom">I'm not a member. <a href="#" class="link-signup" @click.prevent="setActiveForm('signup')">Signup</a></p>
-        </div>
-      </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
+</template>
+
+<script>
+export default {
     data() {
-      return {
-        activeForm: 'signup'
-      };
+        return {
+            activeForm: "signup",
+        };
     },
     methods: {
-      setActiveForm(form) {
-        this.activeForm = form;
-      }
-    }
-  };
-  </script>
+        setActiveForm(form) {
+            this.activeForm = form;
+        },
+    },
+};
+</script>
 <style scoped>
 .body {
     @apply min-h-screen bg-abu;
@@ -88,13 +144,13 @@
     right: 0;
     bottom: 0;
     background-color: #fff;
-    box-shadow: 10px 10px 30px rgba(0, 0, 0, .05);
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05);
     padding: 20px;
     transform-origin: bottom center;
 }
 .wrapper > * > * {
-    transition: opacity .5s;
-    transition-delay: .6s;
+    transition: opacity 0.5s;
+    transition-delay: 0.6s;
 }
 .form-title {
     font-size: 32px;
@@ -118,7 +174,7 @@
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 16px;
-    transition: border-color .2s;
+    transition: border-color 0.2s;
 }
 .form-input:focus {
     border-color: #006aff;
@@ -131,7 +187,7 @@
     font-size: 20px;
     color: #ccc;
     pointer-events: none;
-    transition: color .2s;
+    transition: color 0.2s;
 }
 .form-label {
     position: absolute;
@@ -139,7 +195,7 @@
     transform: translateY(-50%);
     left: 40px;
     pointer-events: none;
-    transition: all .2s;
+    transition: all 0.2s;
     background-color: #fff;
     color: #888;
 }
@@ -183,8 +239,6 @@
 .form-bottom a:hover {
     text-decoration: underline;
 }
-
-
 
 .form-signup {
     z-index: 0;
@@ -248,93 +302,93 @@
 }
 /* end: Form */
 .form-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(247, 246, 246, 0.884);
-  transform-origin: bottom center;
-  transform: rotateZ(2deg);
-  z-index: -1;
-  
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(247, 246, 246, 0.884);
+    transform-origin: bottom center;
+    transform: rotateZ(2deg);
+    z-index: -1;
 }
 .show {
-  opacity: 1;
-  z-index: 1;
+    opacity: 1;
+    z-index: 1;
 }
 
 .hide {
-  opacity: 0;
-  z-index: 0;
+    opacity: 0;
+    z-index: 0;
 }
 
 .form-signup.show,
 .form-login.hide {
-  transform: rotateZ(-2deg);
+    transform: rotateZ(-2deg);
 }
 
 .form-signup.hide,
 .form-login.show {
-  transform: rotateZ(0deg);
+    transform: rotateZ(0deg);
 }
 
 .form-group:focus-within .form-label,
 .form-group:focus-within .form-icon {
-  color: #006aff;
-}
-
-  .form-signup.show .form-overlay,
-  .form-login.show .form-overlay {
-    animation: overlayShow 1s ease-in-out forwards;
-  }
-
-  .form-signup.hide .form-overlay,
-  .form-login.hide .form-overlay {
-    animation: overlayHide 1s ease-in-out forwards;
-  }
-
-  @keyframes overlayShow {
-    0% {
-      opacity: 0;
-      z-index: 0;
-    }
-    100% {
-      opacity: 1;
-      z-index: 1;
-    }
-  }
-
-  @keyframes overlayHide {
-    0% {
-      opacity: 1;
-      z-index: 1;
-    }
-    100% {
-      opacity: 0;
-      z-index: 0;
-    }
-  }
-  @keyframes swapForms {
-  0% {
-    transform: rotateY(0deg);
-  }
-  50% {
-    transform: rotateY(180deg);
-  }
-  100% {
-    transform: rotateY(0deg);
-  }
+    color: #006aff;
 }
 
 .form-signup.show .form-overlay,
 .form-login.show .form-overlay {
-  animation: overlayShow 1s ease-in-out forwards, swapForms 1s ease-in-out forwards;
+    animation: overlayShow 1s ease-in-out forwards;
 }
 
 .form-signup.hide .form-overlay,
 .form-login.hide .form-overlay {
-  animation: overlayHide 1s ease-in-out forwards, swapForms 1s ease-in-out forwards;
+    animation: overlayHide 1s ease-in-out forwards;
 }
-  
+
+@keyframes overlayShow {
+    0% {
+        opacity: 0;
+        z-index: 0;
+    }
+    100% {
+        opacity: 1;
+        z-index: 1;
+    }
+}
+
+@keyframes overlayHide {
+    0% {
+        opacity: 1;
+        z-index: 1;
+    }
+    100% {
+        opacity: 0;
+        z-index: 0;
+    }
+}
+@keyframes swapForms {
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(180deg);
+    }
+    100% {
+        transform: rotateY(0deg);
+    }
+}
+
+.form-signup.show .form-overlay,
+.form-login.show .form-overlay {
+    animation: overlayShow 1s ease-in-out forwards,
+        swapForms 1s ease-in-out forwards;
+}
+
+.form-signup.hide .form-overlay,
+.form-login.hide .form-overlay {
+    animation: overlayHide 1s ease-in-out forwards,
+        swapForms 1s ease-in-out forwards;
+}
 </style>
