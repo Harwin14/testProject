@@ -15,7 +15,8 @@ module.exports = {
         primary: '#5542f6',
         highlight: '#eae8f8',
         abu: '#F5F5F5',
-        darkAbu: '#EEEEEE'
+        darkAbu: '#EEEEEE',
+        gold:'#f4b050'
       },
       screens: {
         'xs': '400px',

@@ -2,66 +2,6 @@
     <div class="body flexCenter">
         <div class="wrapper">
             <div class="form-overlay"></div>
-
-            <div
-                class="form-signup"
-                :class="{
-                    show: activeForm === 'signup',
-                    hide: activeForm === 'login',
-                }"
-            >
-                <h2 class="form-title">Sign Up</h2>
-                <p class="form-description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Explicabo, cum!
-                </p>
-                <form action="">
-                    <div class="form-group">
-                        <input
-                            type="email"
-                            class="form-input"
-                            placeholder=" "
-                        />
-                        <label for="" class="form-label">Email address</label>
-                        <i class="ri-at-line form-icon"></i>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-input" placeholder=" " />
-                        <label for="" class="form-label">Your name</label>
-                        <i class="ri-user-smile-line form-icon"></i>
-                    </div>
-                    <div class="form-group">
-                        <input
-                            type="password"
-                            class="form-input"
-                            placeholder=" "
-                        />
-                        <label for="" class="form-label">Password</label>
-                        <i class="ri-lock-line form-icon"></i>
-                    </div>
-                    <div class="form-group">
-                        <input
-                            type="password"
-                            class="form-input"
-                            placeholder=" "
-                        />
-                        <label for="" class="form-label"
-                            >Confirm password</label
-                        >
-                        <i class="ri-lock-line form-icon"></i>
-                    </div>
-                    <button type="submit" class="btn-submit">Signup</button>
-                </form>
-                <p class="form-bottom">
-                    I'm not a member.
-                    <a
-                        href="#"
-                        class="link-login"
-                        @click.prevent="setActiveForm('login')"
-                        >Login</a
-                    >
-                </p>
-            </div>
             <div
                 class="form-login"
                 :class="{
@@ -69,19 +9,24 @@
                     hide: activeForm === 'signup',
                 }"
             >
+                <div class="flexCenter">
+                    <img alt="logo" src="ani.png" width="100" height="100" />
+                </div>
                 <h2 class="form-title">Login</h2>
-                <p class="form-description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Explicabo, cum!
-                </p>
-                <form action="">
+                <div class="mb-4 flexCenter text-red-500 font-bold text-l">
+                    <v-alert v-if="error"
+                        >Email or password are incorect!</v-alert
+                    >
+                </div>
+                <form @submit.prevent="handleLogin">
                     <div class="form-group">
                         <input
-                            type="email"
+                            type="text"
                             class="form-input"
+                            v-model="username"
                             placeholder=" "
                         />
-                        <label for="" class="form-label">Email address</label>
+                        <label class="form-label">Email address</label>
                         <i class="ri-at-line form-icon"></i>
                     </div>
                     <div class="form-group">
@@ -89,14 +34,15 @@
                             type="password"
                             class="form-input"
                             placeholder=" "
+                            v-model="password"
                         />
-                        <label for="" class="form-label">Password</label>
+                        <label class="form-label">Password</label>
                         <i class="ri-lock-line form-icon"></i>
                     </div>
                     <button type="submit" class="btn-submit">Login</button>
                 </form>
                 <p class="form-bottom">
-                    I'm not a member.
+                    Don't have account ?
                     <a
                         href="#"
                         class="link-signup"
@@ -105,21 +51,163 @@
                     >
                 </p>
             </div>
+            <div
+                class="form-signup"
+                :class="{
+                    show: activeForm === 'signup',
+                    hide: activeForm === 'login',
+                }"
+            >
+                <div class="flexCenter">
+                    <img alt="logo" src="ani.png" width="100" height="100" />
+                </div>
+
+                <h2 class="form-title">Sign Up</h2>
+                <form @submit.prevent="handleRegister">
+                    <div class="form-group">
+                        <input
+                            type="email"
+                            class="form-input"
+                            placeholder=" "
+                            v-model="username"
+                            required
+                        />
+                        <label class="form-label">Email address</label>
+                        <i class="ri-at-line form-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            class="form-input"
+                            placeholder=" "
+                            v-model="profileName"
+                            required
+                        />
+                        <label class="form-label">Your name</label>
+                        <i class="ri-user-smile-line form-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="password"
+                            class="form-input"
+                            placeholder=" "
+                            v-model="password"
+                            required
+                        />
+                        <label class="form-label">Password</label>
+                        <i class="ri-lock-line form-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="password"
+                            class="form-input"
+                            placeholder=" "
+                            v-model="confirmPassword"
+                            required
+                        />
+                        <label class="form-label">Confirm password</label>
+                        <i class="ri-lock-line form-icon"></i>
+                    </div>
+                    <div class="-mt-[12px] flexCenter text-red-500 font-bold text-md">
+                        <v-alert v-if="error" class="text-center">{{
+                            error.message
+                        }}</v-alert>
+                    </div>
+                    <button type="submit" class="btn-submit mt-[13px]">Signup</button>
+                </form>
+                <p class="form-bottom -mt-[40px]">
+                    Have account ?
+                    <a
+                        href="#"
+                        class="link-login"
+                        @click.prevent="setActiveForm('login')"
+                        >Login</a
+                    >
+                </p>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     data() {
         return {
-            activeForm: "signup",
+            activeForm: "login",
+            username: "",
+            profileName: "",
+            password: "",
+            confirmPassword: "",
+
+            error: false,
         };
     },
     methods: {
+        async handleLogin() {
+            try {
+                const response = await axios.post("auth/login", {
+                    username: this.username,
+                    password: this.password,
+                });
+                if (response.status == 200) {
+                    localStorage.setItem(
+                        "accessToken",
+                        response.data.data.token
+                    );
+                    localStorage.setItem(
+                        "user-info",
+                        response.data.data.username
+                    );
+                    this.$router.push("/");
+                }
+            } catch (error) {
+                this.error = true;
+                console.log(error);
+            }
+        },
+        async handleRegister() {
+            if (this.password !== this.confirmPassword) {
+                this.error = {
+                    message: "Password doesn't match!",
+                };
+                return;
+            }
+            if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(this.password)) {
+                this.error = {
+                    message:
+                        "Password must contain at least 6 characters, including uppercase and lowercase letters.",
+                };
+                return;
+            }
+            try {
+                await axios.post("auth/register", {
+                    username: this.username,
+                    profileName: this.profileName,
+                    password: this.password,
+                });
+                this.username = "";
+                this.password = "";
+                this.activeForm = "login";
+            } catch (error) {
+                this.error = true;
+                console.log(error);
+            }
+        },
         setActiveForm(form) {
             this.activeForm = form;
+            this.username = "";
+            this.profileName = "";
+            this.password = "";
+            this.confirmPassword = "";
         },
+    },
+    mounted() {
+        let user = localStorage.getItem("user-info");
+        if (user) {
+            this.$router.push("/");
+        }
     },
 };
 </script>
@@ -136,6 +224,9 @@ export default {
     position: relative;
     perspective: 1000px;
     transform-style: preserve-3d;
+    border-radius: 6px;
+    border: 1px solid #c4ab89;
+    padding: 6px;
 }
 .wrapper > * {
     position: absolute;
@@ -144,25 +235,26 @@ export default {
     right: 0;
     bottom: 0;
     background-color: #fff;
-    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05);
+    box-shadow: 9px 12px 18px 0px rgba(184, 126, 43, 1);
     padding: 20px;
     transform-origin: bottom center;
+    border-radius: 6px;
+    border: 1px solid #e7b875;
+    padding: 6px;
 }
 .wrapper > * > * {
-    transition: opacity 0.5s;
-    transition-delay: 0.6s;
+    transition: opacity 0.4s;
+    transition-delay: 0.4s;
 }
 .form-title {
-    font-size: 32px;
-    font-weight: 600;
+    font-size: 42px;
+    font-weight: 800;
     margin-bottom: 10px;
     text-align: center;
+    color: #534025;
+    text-shadow: 3px -2px 0px rgba(244, 176, 80, 0.63);
 }
-.form-description {
-    color: #888;
-    margin-bottom: 48px;
-    text-align: center;
-}
+
 .form-group {
     position: relative;
     margin-bottom: 20px;
@@ -171,13 +263,14 @@ export default {
     width: 100%;
     padding: 12px 16px 12px 40px;
     outline: none;
-    border: 1px solid #ccc;
+    border: 2px solid #81643e;
     border-radius: 6px;
     font-size: 16px;
     transition: border-color 0.2s;
 }
 .form-input:focus {
-    border-color: #006aff;
+    @apply border-2 border-gold
+  /* border-color: #006aff; */;
 }
 .form-icon {
     position: absolute;
@@ -185,7 +278,7 @@ export default {
     transform: translateY(-50%);
     left: 10px;
     font-size: 20px;
-    color: #ccc;
+    color: #81643e;
     pointer-events: none;
     transition: color 0.2s;
 }
@@ -197,7 +290,7 @@ export default {
     pointer-events: none;
     transition: all 0.2s;
     background-color: #fff;
-    color: #888;
+    color: #81643e;
 }
 .form-group:has(.form-input:not(:placeholder-shown)) .form-label,
 .form-group:focus-within .form-label {
@@ -207,7 +300,7 @@ export default {
 }
 .form-group:focus-within .form-label,
 .form-group:focus-within .form-icon {
-    color: #006aff;
+    color: #f4b050;
 }
 .btn-submit {
     padding: 12px 16px;
@@ -215,25 +308,25 @@ export default {
     align-items: center;
     justify-content: center;
     width: 100%;
-    font-weight: 500;
+    font-weight: 800;
     font-size: 16px;
-    background-color: #006aff;
+    background-color: #d68c25;
     color: #fff;
-    border: none;
-    outline: none;
+    border: 2px solid #81643e;
     cursor: pointer;
     border-radius: 6px;
     margin-bottom: 48px;
 }
 .btn-submit:hover {
-    background-color: #0060fe;
+    background-color: #925a0b;
 }
 .form-bottom {
     text-align: center;
-    color: #888;
+    color: #81643e;
 }
 .form-bottom a {
-    color: #006aff;
+    color: #915809;
+    font-weight: 800;
     text-decoration: none;
 }
 .form-bottom a:hover {
@@ -334,7 +427,7 @@ export default {
 
 .form-group:focus-within .form-label,
 .form-group:focus-within .form-icon {
-    color: #006aff;
+    color: #f4b050;
 }
 
 .form-signup.show .form-overlay,

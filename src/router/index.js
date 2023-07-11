@@ -1,49 +1,52 @@
-import { createRouter , createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 
-import Dashboard from '../pages/Dashboard.vue'
-import Login from'../pages/Login.vue'
-import Home from '../pages/Home.vue'
-import Profile from '../pages/Profile.vue'
-import Signup from '../pages/Signup.vue'
+import Dashboard from "../views/Dashboard.vue";
+import Auth from "../views/Auth.vue";
+
+import Product from "../views/product/Product.vue";
+import AddProduct from "../views/product/AddProduct.vue";
+import ListProduct from "../views/product/ListProduct.vue";
+import EditProduct from "../views/product/EditProduct.vue";
+
+import Supplier from "../views/supplier/Supplier.vue";
+import AddSupplier from "../views/supplier/AddSupplier.vue";
+import ListSupplier from "../views/supplier/ListSupplier.vue";
+import EditSupplier from "../views/supplier/EditSupplier.vue";
+
 const routes = [
     {
-      path: '/',
-      name:'Dashboard',
-      component: Dashboard,
-      // children: [
-      //   {
-      //     path: '',
-      //     component: AdminDashboard
-      //   }
-      // ]
+        path: "/",
+        name: "Dashboard",
+        component: Dashboard,
     },
     {
-      path: '/home',
-      name:'Home',
-      component: Home,
+        path: "/auth",
+        name: "Auth",
+        component: Auth,
     },
     {
-      path: '/profile',
-      name:'Profile',
-      component: Profile,
+        path: "/products",
+        component: Product,
+        children: [
+            { path: "", component: ListProduct },
+            { path: "create", component: AddProduct },
+            { path: ":id/edit", component: EditProduct },
+        ],
     },
     {
-      path: '/login',
-      name:'Login',
-      component: Login,
+        path: "/suppliers",
+        component: Supplier,
+        children: [
+            { path: "", component: ListSupplier },
+            { path: "create", component: AddSupplier },
+            { path: ":id/edit", component: EditSupplier },
+        ],
     },
-    {
-      path: '/signup',
-      name:'Signup',
-      component: Signup,
-    }
-  ]
-
-
+];
 
 const router = createRouter({
     history: createWebHistory(),
-    routes
-  })
-  
-  export default router
+    routes,
+});
+
+export default router;
